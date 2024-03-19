@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 
 import { twMerge } from 'tailwind-merge'
-import qs from 'query-string'
+import queryString from 'query-string'
 
 import { UrlQueryParams, RemoveUrlQueryParams } from '@/types'
 
@@ -58,11 +58,11 @@ export const formatPrice = (price: string) => {
 }
 
 export function formUrlQuery({ params, key, value }: UrlQueryParams) {
-  const currentUrl = qs.parse(params)
+  const currentUrl = queryString.parse(params)
 
   currentUrl[key] = value
 
-  return qs.stringifyUrl(
+  return queryString.stringifyUrl(
     {
       url: window.location.pathname,
       query: currentUrl,
@@ -72,13 +72,13 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams) {
 }
 
 export function removeKeysFromQuery({ params, keysToRemove }: RemoveUrlQueryParams) {
-  const currentUrl = qs.parse(params)
+  const currentUrl = queryString.parse(params)
 
   keysToRemove.forEach(key => {
     delete currentUrl[key]
   })
 
-  return qs.stringifyUrl(
+  return queryString.stringifyUrl(
     {
       url: window.location.pathname,
       query: currentUrl,
