@@ -15,20 +15,9 @@ export type UpdateUserParams = {
 
   
   // ====== EVENT PARAMS
-  export type CreateEventParams = {
+  export type addCoinParams = {
     userId: string
-    event: {
-      title: string
-      description: string
-      location: string
-      imageUrl: string
-      startDateTime: Date
-      endDateTime: Date
-      categoryId: string
-      price: string
-      isFree: boolean
-      url: string
-    }
+    coin: string,
     path: string
   }
   
@@ -55,9 +44,8 @@ export type UpdateUserParams = {
     path: string
   }
   
-  export type GetAllEventsParams = {
+  export type GetAllCoinsParams = {
     query: string
-    category: string
     limit: number
     page: number
   }

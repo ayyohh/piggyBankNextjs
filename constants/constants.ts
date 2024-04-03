@@ -5,7 +5,7 @@ export const headerLinks = [
     },
     {
       label: 'Add a Coin',
-      route: '/portfolio/add',
+      route: '/portfolio/AddCoin',
     },
     {
       label: 'My Portfolio',
