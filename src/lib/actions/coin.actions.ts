@@ -9,13 +9,9 @@ import Category from '@/lib/database/models/category.model'
 import { handleError } from '@/lib/utils'
 
 import {
-  //UpdateEventParams,
-  //DeleteEventParams,
-  //GetAllEventsParams,
-  //GetEventsByUserParams,
-  //GetRelatedEventsByCategoryParams,
+  DeleteCoinParams,
+  GetCoinsByUserParams,
   addCoinParams,
-  //GetAllCoinsParams,
 } from '@/types'
 
 
@@ -40,19 +36,19 @@ export async function addCoin({ userId, coin, path }: addCoinParams) {
 }
 
 // GET ONE EVENT BY ID
-//export async function getCoinById(eventId: string) {
-  //try {
-    //await connectToDatabase()
+export async function getCoinById(coinId: string) {
+  try {
+    await connectToDatabase()
 
-//    const event = await populateEvent(Coin.findById(eventId))
+    const coin = await Coin.findById(coinId);
 
-  //  if (!event) throw new Error('Event not found')
+    if (!coin) throw new Error('Coin not found')
 
-    //return JSON.parse(JSON.stringify(event))
-  //} catch (error) {
-   // handleError(error)
-  //}
-//}
+    return JSON.parse(JSON.stringify(coin))
+  } catch (error) {
+    handleError(error)
+  }
+}
 
 // UPDATE
 //export async function updateCoin({ userId, event, path }: UpdateCoinParams) {
@@ -78,90 +74,31 @@ export async function addCoin({ userId, coin, path }: addCoinParams) {
 //}
 
 // DELETE
-//export async function deleteCoin({ eventId, path }: DeleteCoinParams) {
-//  try {
- //   await connectToDatabase()
+export async function deleteCoin({ coinId, path }: DeleteCoinParams) {
+  try {
+    await connectToDatabase()
 
-   // const deletedCoin = await Coin.findByIdAndDelete(eventId)
-   // if (deletedEvent) revalidatePath(path)
-  //} catch (error) {
-  //  handleError(error)
-  //}
-//}
+    const deletedCoin = await Coin.findByIdAndDelete(coinId);
+    if (deletedCoin) revalidatePath(path)
+  } catch (error) {
+    handleError(error)
+  }
+}
 
-// GET ALL EVENTS
-//export async function getAllCoins({ query, limit = 6, page, category }: GetAllCoinsParams) {
- // try {
-  //  await connectToDatabase()
 
-   // const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
-   // const categoryCondition = category ? await getCategoryByName(category) : null
-   // const conditions = {
-   ///   $and: [titleCondition, categoryCondition ? { category: categoryCondition._id } : {}],
-   // }
+// GET COINS BY OWNER
+export async function getCoinsByUser(userId: string) {
+  try {
+    await connectToDatabase()
 
-   // const skipAmount = (Number(page) - 1) * limit
-    //const eventsQuery = Coin.find(conditions)
-    //  .sort({ createdAt: 'desc' })
-     // .skip(skipAmount)
-     /// .limit(limit)
+  const conditions = { owner: userId }
+   const coinsQuery = Coin.find(conditions)
+      .sort({ createdAt: 'desc' })
 
-//    const events = await populateEvent(eventsQuery)
-  //  const eventsCount = await Coin.countDocuments(conditions)
-//
-  //  return {
-   //   data: JSON.parse(JSON.stringify(events)),
-     // totalPages: Math.ceil(eventsCount / limit),
- //   }
- // } catch (error) {
- //   handleError(error)
- // }
-//}
+    const coins = await coinsQuery
 
-// GET EVENTS BY ORGANIZER
-//export async function getEventsByUser({ userId, limit = 6, page }: GetEventsByUserParams) {
- // try {
-  //  await connectToDatabase()
-
-//    const conditions = { organizer: userId }
-  //  const skipAmount = (page - 1) * limit
-//   const eventsQuery = Coin.find(conditions)
-  //    .sort({ createdAt: 'desc' })
-    //  .skip(skipAmount)
-      //.limit(limit)
-
-//    const events = await populateEvent(eventsQuery)
-//    const eventsCount = await Event.countDocuments(conditions)
-
-  //  return { data: JSON.parse(JSON.stringify(events)), totalPages: Math.ceil(eventsCount / limit) }
- // } catch (error) {
-  //  handleError(error)
-  //}
-//}
-
-// GET RELATED EVENTS: EVENTS WITH SAME CATEGORY
-//export async function getRelatedEventsByCategory({
-//  categoryId,
- // eventId,
- // limit = 3,
- // page = 1,
-//}: GetRelatedEventsByCategoryParams) {
- // try {
-  //  await connectToDatabase()
-
-    //const skipAmount = (Number(page) - 1) * limit
-   // const conditions = { $and: [{ category: categoryId }, { _id: { $ne: eventId } }] }
-
-   // const eventsQuery = Event.find(conditions)
-     // .sort({ createdAt: 'desc' })
- //     .skip(skipAmount)
-   //   .limit(limit)
-
-   // const events = await populateEvent(eventsQuery)
-   // const eventsCount = await Event.countDocuments(conditions)
-
- //   return { data: JSON.parse(JSON.stringify(events)), totalPages: Math.ceil(eventsCount / limit) }
- // } catch (error) {
- //   handleError(error)
- // }
-//}
+    return { data: JSON.parse(JSON.stringify(coins)) }
+  } catch (error) {
+    handleError(error)
+  }
+}

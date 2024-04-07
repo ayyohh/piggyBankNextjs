@@ -46,21 +46,19 @@ const AddCoinForm = ({ userId, type }: AddCoinProps) => {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    console.log(values);
     const coinValue = values.coin.toUpperCase().trim();
-    console.log(coinValue);
 
     if(type === 'Add') {
         try {
-          const newEvent = await addCoin({
+          const newCoin = await addCoin({
             coin: coinValue,
             userId,
             path: '/portfolio'
           })
   
-          if(newEvent) {
+          if(newCoin) {
             form.reset();
-            router.push(`/events/${newEvent._id}`)
+            router.push(`/portfolio/${newCoin._id}`)
           }
         } catch (error) {
           console.log(error);

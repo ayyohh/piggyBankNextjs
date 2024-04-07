@@ -39,8 +39,8 @@ export type UpdateUserParams = {
     path: string
   }
   
-  export type DeleteEventParams = {
-    eventId: string
+  export type DeleteCoinParams = {
+    coinId: string
     path: string
   }
   
@@ -50,10 +50,8 @@ export type UpdateUserParams = {
     page: number
   }
   
-  export type GetEventsByUserParams = {
-    userId: string
-    limit?: number
-    page: number
+  export type GetCoinsByUserParams = {
+    userId: string,
   }
   
   export type GetRelatedEventsByCategoryParams = {
