@@ -12,7 +12,7 @@ const Portfolio = async (coins: PortfolioProps) => {
   console.log(coins.coins[0].coin);
   return (
     <div>
-      <ul className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10">
+      <ul className="grid w-full grid-cols-1 gap-2 sm:grid-cols-3 lg:grid-cols-3 xl:gap-10">
         {coins.coins.map((coin) => {
           return (
             <li key={coin._id} className="flex justify-center">
